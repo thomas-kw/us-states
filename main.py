@@ -22,15 +22,18 @@ writer.color('black')
 df = pandas.read_csv("50_states.csv")
 
 guessed_states = []
+all_states = df['state'].to_list()
 while len(guessed_states) < 50:
     guess = screen.textinput(title=f"{len(guessed_states)} out of 50 guessed", prompt="What's another state's name?").title()
     if guess == "Exit":
-        total_states = df["state"].to_list()
-        for state in guessed_states:
-            if state in total_states:
-                total_states.remove(state)
-        total_df = pandas.DataFrame(total_states)
-        total_df.to_csv("remaining_states.csv")
+        missing_states = [state for state in all_states if state not in guessed_states]
+        print(missing_states)
+        # total_states = df["state"].to_list()
+        # for state in guessed_states:
+        #     if state in total_states:
+        #         total_states.remove(state)
+        # total_df = pandas.DataFrame(total_states)
+        # total_df.to_csv("remaining_states.csv")
         break
     if guess in df['state'].unique():
         guessed_states.append(guess)
